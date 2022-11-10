@@ -1,0 +1,6 @@
+{:paths ["src" "data"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+
+        ;; dev
+        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}
+        vvvvalvalval/scope-capture {:mvn/version "0.3.3"}}}
