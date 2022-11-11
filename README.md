@@ -4,4 +4,4 @@
 | --- | --- | --- |
 | 2021 | [1](src/y2021/d1.clj) | off to a nice, neat start |
 
-(feedback welcome!)
+Feedback welcome!
