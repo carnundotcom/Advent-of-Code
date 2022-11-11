@@ -3,11 +3,8 @@
             [clojure.string :as str]))
 
 (defn input-filename []
-  (as-> (str *ns*) s
-    (str/split s #"\.")
-    (interleave (repeat "/") s)
-    (apply str s)
-    (str "data" s ".txt")))
+  (->> (str/split (str *ns*) #"\.")
+       (apply format "data/%s/%s.txt")))
 
 (defn input []
   (fs/read-all-lines (input-filename)))
