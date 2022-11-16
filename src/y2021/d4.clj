@@ -1,5 +1,6 @@
 (ns y2021.d4
-  (:require [clojure.string :as str]
+  (:require [clojure.set :refer [map-invert]]
+            [clojure.string :as str]
             [hyperfiddle.rcf :refer [tests]]
             [utils :as u]))
 
@@ -24,9 +25,11 @@
                   " 2  0 12  3  7"])
 (def input (u/input))
 
-; ---
+; --- input parsing ---
 
-(defn- parse-board [board]
+(defn- parse-board
+  "Produces a val -> {:x, :y} map."
+  [board]
   (->> board
        (map-indexed (fn [x row]
                       (map-indexed (fn [y v]
@@ -36,31 +39,87 @@
        (into {})))
 
 (defn parse-input [[draws _ & boards]]
-  {:draws (->> (str/split draws #",")
-               (map parse-long))
-   :boards (->> (partition-by str/blank? boards)
-                (remove #(= '("") %))
-                (mapv (fn [board]
-                        (->> board
-                             (map #(->> (str/split % #"\s+")
-                                        (remove str/blank?)
-                                        (map parse-long)))
-                             parse-board))))})
+  (let [boards (->> (partition-by str/blank? boards)
+                    (remove #(= '("") %))
+                    (mapv (fn [board]
+                            (->> board
+                                 (map #(->> (str/split % #"\s+")
+                                            (remove str/blank?)
+                                            (map parse-long)))
+                                 parse-board))))]
+    {:draws (->> (str/split draws #",")
+                 (map parse-long))
+     :val-boards boards
+     :pos-boards (mapv map-invert boards)}))
 
 (tests
   (def parsed-dummy-input (parse-input dummy-input))
   (:draws parsed-dummy-input) := '(7 4 9 5 11 17 23 2 0 14 21 24 10 16 13 6 15 25 12 22 18 20 8 19 3 26 1)
-  (get-in parsed-dummy-input [:boards 0 22]) := {:x 0 :y 0}
-  (get-in parsed-dummy-input [:boards 0 18]) := {:x 3 :y 3}
-  (get-in parsed-dummy-input [:boards 0 5]) := {:x 3 :y 4})
+  (get-in parsed-dummy-input [:val-boards 0 22]) := {:x 0 :y 0}
+  (get-in parsed-dummy-input [:val-boards 0 18]) := {:x 3 :y 3}
+  (get-in parsed-dummy-input [:val-boards 0 5]) := {:x 3 :y 4}
+  (get-in parsed-dummy-input [:pos-boards 0 {:x 0 :y 0}]) := 22
+  (get-in parsed-dummy-input [:pos-boards 0 {:x 3 :y 3}]) := 18
+  (get-in parsed-dummy-input [:pos-boards 0 {:x 3 :y 4}]) := 5
+  )
 
-;; draw until winning board
-;; sum all unmarked nums on winning board
-;; multiply by last num drawn
+; --- part 1 ---
 
-;; need fast access to board positions of nums
-;; need fast marked? check
+(defn- winner? [val-board pos-board [x y]]
+  (let [marked-at-pos? (fn [val-board pos-board x y]
+                         (get-in val-board [(get pos-board {:x x :y y}) :marked?]))
+        board-size (int (Math/sqrt (count val-board)))
+        row-marks (-> (for [col (range board-size)]
+                        (marked-at-pos? val-board pos-board x col)))
+        col-marks (-> (for [row (range board-size)]
+                        (marked-at-pos? val-board pos-board row y)))]
+    (or (every? true? row-marks)
+        (every? true? col-marks))))
 
-;; could build map from num to [x y] position, for each board
-;; even, num -> {:x, :y, :marked?}
-;; simple, right?
+(defn- maybe-mark-board [{:keys [val-boards pos-boards] :as m} n draw]
+  (let [val-board (get val-boards n)
+        [val-board' [x y]] (let [{:keys [x y]} (get val-board draw)]
+                             (if x
+                               [(assoc-in val-board [draw :marked?] true) [x y]]
+                               [val-board]))]
+    (cond-> (assoc-in m [:val-boards n] val-board')
+      (and x (winner? val-board' (get pos-boards n) [x y]))
+      (assoc :winning-val-board val-board'))))
+
+(defn- mark-boards [{:keys [val-boards] :as m} draw]
+  (loop [n (dec (count val-boards))
+         m' m]
+    (if (< n 0)
+      m'
+      (recur (dec n)
+             (maybe-mark-board m' n draw)))))
+
+(defn make-draws [{:keys [draws] :as parsed-input}]
+  (loop [draws' draws
+         m (select-keys parsed-input [:val-boards :pos-boards])]
+    (let [[draw & draws'] draws'
+          m' (and draw (mark-boards m draw))
+          winning-board (and draw (:winning-val-board m'))]
+      (cond
+        (not draw) m
+        winning-board {:winning-draw draw
+                       :winning-board winning-board}
+        :else (recur draws' m')))))
+
+(defn score [{:keys [winning-draw winning-board]}]
+  (* winning-draw
+     (->> (remove (comp :marked? second) winning-board)
+          (map first)
+          (reduce +))))
+
+(defn part-1 [input]
+  (-> (parse-input input)
+      make-draws
+      score))
+
+(tests
+  (part-1 dummy-input) := 4512)
+
+(comment
+  (part-1 input) ; => 10680
+  )
