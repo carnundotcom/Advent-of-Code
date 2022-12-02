@@ -7,5 +7,6 @@
 | 2021 | [3](src/y2021/d3.clj) | not terrible |
 | | | |
 | 2022 | [1](src/y2022/d1.clj) | let's goooooo! |
+| 2022 | [2](src/y2022/d2.clj) | alright: I was a bit distracted :P |
 
 Feedback welcome!
