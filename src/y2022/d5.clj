@@ -30,12 +30,11 @@
   (uppercase-letter? \[) := nil)
 
 (defn parse [input]
-  (let [{stacks false, steps true} (group-by #(str/starts-with? % "move") input)
-        stacks (->> (take (- (count stacks) 2) stacks) ; ignore numbers and blank line
-                    (map #(partition 4 4 (repeat \space) %))
-                    (apply (partial map list))
-                    (mapv #(keep (partial some uppercase-letter?) %)))]
-    {:stacks stacks
+  (let [{stacks false, steps true} (group-by #(str/starts-with? % "move") input)]
+    {:stacks (->> (take (- (count stacks) 2) stacks) ; ignore numbers and blank line
+                  (map #(partition 4 4 (repeat \space) %))
+                  (apply (partial map list))
+                  (mapv #(keep (partial some uppercase-letter?) %)))
      :steps (map #(let [[move from to] (re-seq #"\d+" %)]
                     [(parse-long move)
                      ;; 0-based indexing of the stacks vector
