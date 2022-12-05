@@ -39,7 +39,8 @@
                     [(parse-long move)
                      ;; 0-based indexing of the stacks vector
                      (dec (parse-long from))
-                     (dec (parse-long to))]) steps)}))
+                     (dec (parse-long to))])
+                 steps)}))
 
 (defn- single-move
   "Part 1 helper."
