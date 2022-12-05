@@ -16,9 +16,6 @@
 
 ; ---
 
-; stacks of crates as lists — 'top' of stack is first in list
-; parsing needs to produce the lists and a sequence of drops and conjes — perhaps with a macro?
-
 (defn- uppercase-letter? [ch]
   (when (and (<= (int \A) (int ch) (inc (int \Z)))
              (not= ch \[) (not= ch \]))
