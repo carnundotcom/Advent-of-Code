@@ -12,5 +12,6 @@
 | 2022 | [4](src/y2022/d4.clj) | ditto |
 | 2022 | [5](src/y2022/d5.clj) | parsing is a little inelegant, but the rest was fine :) |
 | 2022 | [6](src/y2022/d6.clj) | piece of piss |
+| 2022 | [7](src/y2022/d7.clj) | SO IT BEGINS |
 
 Feedback welcome!
