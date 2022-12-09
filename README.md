@@ -13,6 +13,6 @@
 | 2022 | [5](src/y2022/d5.clj) | parsing is a little inelegant, but the rest was fine :) |
 | 2022 | [6](src/y2022/d6.clj) | piece of piss |
 | 2022 | [7](src/y2022/d7.clj) | SO IT BEGINS |
-| 2022 | [8](src/y2022/d7.clj) | eh... quite ugly :/ |
+| 2022 | [8](src/y2022/d8.clj) | eh... quite ugly :/ |
 
 Feedback welcome!
