@@ -1,5 +1,7 @@
 {:paths ["src" "data"]
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        ; ---
+        net.mikera/core.matrix {:mvn/version "0.63.0"}
         babashka/fs {:mvn/version "0.1.11"}
 
         ;; dev
