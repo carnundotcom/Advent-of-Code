@@ -15,5 +15,6 @@
 | 2022 | [7](src/y2022/d7.clj) | SO IT BEGINS |
 | 2022 | [8](src/y2022/d8.clj) | eh... quite ugly :/ |
 | 2022 | [9](src/y2022/d9.clj) | not too bad! |
+| 2022 | [10](src/y2022/d10.clj) | neat enough! |
 
 Feedback welcome!
