@@ -47,10 +47,10 @@
          {:keys [status body]} (client/get (format "https://adventofcode.com/%s/day/%s/input" year day)
                                            {:headers {"Cookie" (str "session=" session-token)}})]
      (if (= 200 status)
-       (do (println " -> downloaded puzzle input")
+       (do (println "downloaded puzzle input")
            (write-file dirname filename body)
-           (println (format "created data/y%s/d%s.txt" year day)))
-       " -> puzzle input download failed"))
+           (println (format " -> created data/y%s/d%s.txt" year day)))
+       "puzzle input download failed"))
    ;; new line in readme
    (let [readme-lines (-> (slurp "README.md")
                           (str/split #"\n"))
