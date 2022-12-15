@@ -1,4 +1,4 @@
-{:paths ["src" "data"]
+{:paths ["" "src" "data"]
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         ; ---
         clj-http/clj-http {:mvn/version "3.12.3"}

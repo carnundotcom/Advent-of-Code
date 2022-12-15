@@ -21,7 +21,7 @@
    (let [date (java.time.LocalDate/now)]
      (setup (.getYear date) (.getDayOfMonth date))))
   ([day]
-   (setup (java.time.LocalDate/now) day))
+   (setup (.getYear (java.time.LocalDate/now)) day))
   ([year day]
    ;; create new solution file
    (let [dirname (str "src/y" year "/")
