@@ -98,4 +98,5 @@
 (comment
   (solve input :part-1) ; => 78678N
   (solve input :part-2) ; => ???
+  ;; TODO: I hear there's a mathsy trick for part-2, hmm...
   )
