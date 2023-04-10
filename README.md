@@ -19,5 +19,6 @@
 | 2022 | [11](src/y2022/d11.clj) | part 1? fine. part 2? uhhhhh... |
 | 2022 | [12](src/y2022/d12.clj) | a little ugly. but more importantly: slowwwww... |
 | 2022 | [13](src/y2022/d13.clj) | little hard to understand the spec, but got there in the end |
+| 2022 | [14](src/y2022/d14.clj) | easy enough; wordy solution though |
 
 Feedback welcome!
