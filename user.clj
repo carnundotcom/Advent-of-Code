@@ -3,7 +3,9 @@
             [clj-http.client :as client]
             [clojure.edn :as edn]
             [clojure.string :as str]
-            [hyperfiddle.rcf :as rcf]))
+            [hyperfiddle.rcf :as rcf]
+            ; ---
+            [utils :as u]))
 
 (rcf/enable!)
 
@@ -42,8 +44,7 @@
    ;; download puzzle input
    (let [dirname (str "data/y" year "/")
          filename (str dirname "d" day ".txt")
-         session-token (-> (edn/read-string (slurp "env.edn"))
-                           (get-in [:session-tokens year]))
+         session-token (:session-token (edn/read-string (slurp "env.edn")))
          {:keys [status body]} (client/get (format "https://adventofcode.com/%s/day/%s/input" year day)
                                            {:headers {"Cookie" (str "session=" session-token)}})]
      (if (= 200 status)
@@ -52,20 +53,23 @@
            (println (format " -> created data/y%s/d%s.txt" year day)))
        "puzzle input download failed"))
    ;; new line in readme
-   (let [readme-lines (-> (slurp "README.md")
-                          (str/split #"\n"))
-         split-i (->> readme-lines
-                      (keep-indexed (fn [i line]
-                                      (when-let [table-line (re-find #"src/y\d{4}/d\d{1,2}\.clj" line)]
-                                        (let [[y d] (->> (re-find #"src/y(\d{4})/d(\d{1,2})\.clj" table-line)
-                                                         rest
-                                                         (map parse-long))]
-                                          (when (and (<= y year) (<= d day))
-                                            i)))))
-                      (apply max)
-                      inc)
-         [before after] (split-at split-i readme-lines)]
-     (spit "README.md" (->> (concat before [(format "| %s | [%s](src/y%s/d%s.clj) | |" year day year day)] after)
+   (let [lines (-> (slurp "README.md")
+                   (str/split #"\n"))
+         table-start-index (dec (u/some-i #(re-find #"^\| --- \| --- \| --- \|" %) lines))
+         year->table-lines (-> (group-by #((fnil parse-long "") (second (re-find #"^\| (\d{4}) \|" %))) lines)
+                               (dissoc nil))
+         year->new-table-lines (update year->table-lines
+                                       year #(->> (conj % (format "| %s | [%s](src/y%s/d%s.clj) | |" year day year day))
+                                                  (sort-by (fn [s] (parse-long (second (re-find #"\[(\d{1,2})\]" s)))))))
+         new-table-lines (->> (sort (keys year->new-table-lines))
+                              (map year->new-table-lines)
+                              (interleave (repeat '("| | | |")))
+                              (drop 1)
+                              (apply concat))]
+     (spit "README.md" (->> (concat (take table-start-index lines)
+                                    '("| year | day | summary |" "| --- | --- | --- |")
+                                    new-table-lines
+                                    '("" "Feedback welcome!"))
                             (map #(str % "\n"))
                             (apply str)))
      (println "added a blank line to README.md"))))

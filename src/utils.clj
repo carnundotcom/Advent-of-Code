@@ -16,3 +16,11 @@
   ([] (input *ns*))
   ([ns]
    (fs/read-all-lines (input-filename ns))))
+
+
+;; --- sequences ---
+
+(defn some-i
+  "Returns the index of the first item where (f item) is truthy, else nil."
+  [f coll]
+  (first (keep-indexed #(when (f %2) %1) coll)))
