@@ -4,6 +4,7 @@
 | --- | --- | --- |
 | 2015 | [1](src/y2015/d1.clj) | reduuuuuuuce |
 | 2015 | [2](src/y2015/d2.clj) | simple regex, yummy destructuring, map/reduce... fun! |
+| 2015 | [3](src/y2015/d3.clj) | reduce is very versatile! |
 | | | |
 | 2021 | [1](src/y2021/d1.clj) | off to a nice, neat start |
 | 2021 | [2](src/y2021/d2.clj) | sooo much nicer than [my first attempt](https://github.com/CarnunMP/AoC-2021/blob/master/src/days/day2.clj)! |

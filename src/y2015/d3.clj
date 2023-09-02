@@ -21,33 +21,33 @@
                          \< [(dec x) y])]
               (cond-> m
                 (or (= 1 part) (= :s turn)) (assoc :pos-s pos')
-                (or (= 1 part) (= :s turn)) (update-in [:visits-s pos'] (fnil inc 0))
+                (or (= 1 part) (= :s turn)) (update :visits-s conj pos')
                 (= :r turn) (assoc :pos-r pos')
-                (= :r turn) (update-in [:visits-r pos'] (fnil inc 0))
+                (= :r turn) (update :visits-r conj pos')
                 (= 2 part) (update :turn {:s :r, :r :s}))))
-          {:pos-s [0 0]
-           :visits-s {[0 0] 1}
-           :pos-r [0 0]
-           :visits-r {[0 0] 1}
-           :turn :s}
+          {:pos-s [0 0] ; santa pos
+           :visits-s #{[0 0]} ; santa visits
+           :pos-r [0 0] ; robot santa pos
+           :visits-r #{[0 0]} ; robot santa visits
+           :turn :s} ; start on santa's turn
           input))
 
 
 (tests
   ;; part 1
-  (select-keys (deliver-presents ">") [:pos-s :visits-s]) := {:pos-s [1 0], :visits-s {[0 0] 1, [1 0] 1}}
-  (select-keys (deliver-presents "^>v<") [:pos-s :visits-s]) := {:pos-s [0 0], :visits-s {[0 0] 2, [0 1] 1, [1 1] 1, [1 0] 1}}
-  (select-keys (deliver-presents "^v^v^v^v^v") [:pos-s :visits-s]) := {:pos-s [0 0], :visits-s {[0 0] 6, [0 1] 5}}
+  (select-keys (deliver-presents ">") [:pos-s :visits-s]) := {:pos-s [1 0], :visits-s #{[0 0] [1 0]}}
+  (select-keys (deliver-presents "^>v<") [:pos-s :visits-s]) := {:pos-s [0 0], :visits-s #{[0 0] [0 1] [1 1] [1 0]}}
+  (select-keys (deliver-presents "^v^v^v^v^v") [:pos-s :visits-s]) := {:pos-s [0 0], :visits-s #{[0 0] [0 1]}}
 
   ;; part 2
-  (deliver-presents "^v" {:part 2}) := {:pos-s [0 1], :visits-s {[0 0] 1, [0 1] 1}
-                                        :pos-r [0 -1], :visits-r {[0 0] 1, [0 -1] 1}
+  (deliver-presents "^v" {:part 2}) := {:pos-s [0 1], :visits-s #{[0 0] [0 1]}
+                                        :pos-r [0 -1], :visits-r #{[0 0] [0 -1]}
                                         :turn :s}
-  (deliver-presents "^>v<" {:part 2}) := {:pos-s [0 0], :visits-s {[0 0] 2, [0 1] 1}
-                                          :pos-r [0 0], :visits-r {[0 0] 2, [1 0] 1}
+  (deliver-presents "^>v<" {:part 2}) := {:pos-s [0 0], :visits-s #{[0 0] [0 1]}
+                                          :pos-r [0 0], :visits-r #{[0 0] [1 0]}
                                           :turn :s}
-  (deliver-presents "^v^v^v^v^v" {:part 2}) := {:pos-s [0 5], :visits-s {[0 0] 1, [0 1] 1, [0 2] 1, [0 3] 1, [0 4] 1, [0 5] 1}
-                                                :pos-r [0 -5], :visits-r {[0 0] 1, [0 -1] 1, [0 -2] 1, [0 -3] 1, [0 -4] 1, [0 -5] 1}
+  (deliver-presents "^v^v^v^v^v" {:part 2}) := {:pos-s [0 5], :visits-s #{[0 0] [0 1] [0 2] [0 3] [0 4] [0 5]}
+                                                :pos-r [0 -5], :visits-r #{[0 0] [0 -1] [0 -2] [0 -3] [0 -4] [0 -5]}
                                                 :turn :s}
   )
 
@@ -57,6 +57,6 @@
 
   ;; part-2
   (let [{:keys [visits-s visits-r]} (deliver-presents input {:part 2})]
-    (count (merge visits-s visits-r)))
+    (count (into visits-s visits-r)))
   ; => 2360
   )
