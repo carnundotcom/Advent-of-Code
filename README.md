@@ -7,6 +7,7 @@
 | 2015 | [3](src/y2015/d3.clj) | reduce is very versatile! |
 | 2015 | [4](src/y2015/d4.clj) | clojure is plenty fast, eh? |
 | 2015 | [5](src/y2015/d5.clj) | maybe helper functions would be more readable? otherwise, simple enough :) |
+| 2015 | [6](src/y2015/d6.clj) | had some (but not tooooo much) fun optimising, ha |
 | | | |
 | 2021 | [1](src/y2021/d1.clj) | off to a nice, neat start |
 | 2021 | [2](src/y2021/d2.clj) | sooo much nicer than [my first attempt](https://github.com/CarnunMP/AoC-2021/blob/master/src/days/day2.clj)! |
