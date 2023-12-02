@@ -51,16 +51,18 @@
 ;; part 1
 (defn possible? [game]
   (let [c->max {"red" 12, "green" 13, "blue" 14}]
-    (every? #(every? (fn [c]
-                       (or (nil? (get % c))
-                           (<= (get % c) (get c->max c))))
+    ;; for every selection in this game...
+    (every? #(every? (fn [c] ; ... every color <= max (or absent)
+                       (<= (get % c 0) (get c->max c)))
                      (keys c->max))
             (:cubes game))))
 
 ;; part 2
 (defn min-cubes [game]
+  ;; reduce over all 'cubes' (selections of cubes) in this game...
   (reduce (fn [m cube]
             (->> m
+                 ;; ... to produce a map of min required for each color
                  (map (fn [[c n]] [c (max n (get cube c 0))]))
                  (into {})))
           {"red" 0
