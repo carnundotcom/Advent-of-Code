@@ -53,8 +53,8 @@
     {:n+coords [<int> #{<coord> ...} ...]
      :x+y->sym {<coord> <symbol char>, ...}}
 
-  where :n+coords represents the multiple coordinates of each number in the grid, and :x+y the coordinates of 'symbol'
-  characters."
+  where :n+coords represents the multiple coordinates of each number in the grid, and :x+y->sym the coordinates of
+  'symbol' characters."
   [input]
   (let [rows (map-indexed (fn [y row] (parse-row row y)) input)]
     ; combine data across rows
