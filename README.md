@@ -32,5 +32,6 @@
 | 2023 | [1](src/y2023/d1.clj) | overlapping regex, grrrrr... |
 | 2023 | [2](src/y2023/d2.clj) | zero snags; enjoyed making it nice :) |
 | 2023 | [3](src/y2023/d3.clj) | easy peeeeez... once I figured how best to parse things |
+| 2023 | [4](src/y2023/d4.clj) | neat! |
 
 Feedback welcome!
