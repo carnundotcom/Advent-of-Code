@@ -10,6 +10,8 @@
 | 2015 | [6](src/y2015/d6.clj) | had some (but not tooooo much) fun optimising, ha |
 | 2015 | [7](src/y2015/d7.clj) | **WIP** |
 | | | |
+| 2020 | [1](src/y2020/d1.clj) | (just warming up for 2024!) |
+| | | |
 | 2021 | [1](src/y2021/d1.clj) | off to a nice, neat start |
 | 2021 | [2](src/y2021/d2.clj) | sooo much nicer than [my first attempt](https://github.com/CarnunMP/AoC-2021/blob/master/src/days/day2.clj)! |
 | 2021 | [3](src/y2021/d3.clj) | not terrible |
