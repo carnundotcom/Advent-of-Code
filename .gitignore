@@ -15,3 +15,4 @@ pom.xml.asc
 env.edn
 .clj-kondo/.cache/
 .lsp/.cache/
+data/
