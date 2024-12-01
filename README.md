@@ -35,5 +35,7 @@
 | 2023 | [2](src/y2023/d2.clj) | zero snags; enjoyed making it nice :) |
 | 2023 | [3](src/y2023/d3.clj) | easy peeeeez... once I figured how best to parse things |
 | 2023 | [4](src/y2023/d4.clj) | neat! |
+| | | |
+| 2024 | [1](src/y2024/d1.clj) | |
 
 Feedback welcome!
