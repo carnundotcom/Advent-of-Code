@@ -1,15 +1,25 @@
 {:paths ["" "src" "data"]
  :deps {org.clojure/clojure {:mvn/version "1.12.0"}
-        org.clojure/math.combinatorics {:mvn/version "0.3.0"}
-        ; ---
-        clj-http/clj-http {:mvn/version "3.12.3"}
-        com.clojure-goes-fast/clj-async-profiler {:mvn/version "1.5.1"}
-        net.mikera/core.matrix {:mvn/version "0.63.0"}
+
+        ;; Animation
+        quil/quil {:mvn/version "4.3.1563"}
+
+        ;; Files
         babashka/fs {:mvn/version "0.1.11"}
 
-        ;; dev
-        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}
-        vvvvalvalval/scope-capture {:mvn/version "0.3.3"}}
+        ;; HTTP
+        clj-http/clj-http {:mvn/version "3.12.3"}
+
+        ;; Maths
+        org.clojure/math.combinatorics {:mvn/version "0.3.0"}
+        net.mikera/core.matrix {:mvn/version "0.63.0"}
+
+        ;; Misc
+        com.clojure-goes-fast/clj-async-profiler {:mvn/version "1.5.1"}
+        vvvvalvalval/scope-capture {:mvn/version "0.3.3"}
+
+        ;; Tests
+        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}}
 
  :aliases
  {:dev {:jvm-opts [; clj-async-profiler
