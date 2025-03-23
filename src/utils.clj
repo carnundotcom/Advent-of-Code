@@ -45,17 +45,23 @@
    :s [0  1]
    :w [-1 0]})
 
-(def turn-right 
-  {:n :e 
+(def turn-right
+  {:n :e
    :e :s
    :s :w
    :w :n})
 
 (def turn-left
-  {:n :w 
+  {:n :w
    :e :n
    :s :e
    :w :s})
+
+(def turn-around
+  {:n :s
+   :e :w
+   :s :n
+   :w :e})
 
 (defn grid->positions
   "Returns a (lazy) sequence of all [row col] positions in the 'grid' (a 2D vector)."
