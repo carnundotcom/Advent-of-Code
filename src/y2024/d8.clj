@@ -39,16 +39,17 @@
 (defn- antinodes
   [bounded? order positions]
   (let [start (if (= ##Inf order) 0 order)]
-    (->> ; Take all possible pairs of
-         (combo/combinations positions 2)
+    (->> (combo/combinations positions 2) ; all possible pairs of positions
          (reduce (fn [antinodes [[row1 col1] [row2 col2]]]
                    (let [row-diff (- row2 row1)
                          col-diff (- col2 col1)]
                      (concat antinodes
+                             ; antinodes back from the first in the pair
                              (for [i (range start ##Inf)
                                    :let [pos [(- row1 (* row-diff i)) (- col1 (* col-diff i))]]
                                    :while (and (<= i order) (bounded? pos))]
                                pos)
+                             ; antinodes forward from the second in the pair
                              (for [i (range start ##Inf)
                                    :let [pos [(+ row2 (* row-diff i)) (+ col2 (* col-diff i))]]
                                    :while (and (<= i order) (bounded? pos))]
@@ -56,6 +57,7 @@
                  []))))
 
 (defn- freq-positions
+  "Returns a map from 'frequency' character (e.g. \\A) to its [row col] positions in grid."
   [grid]
   (->> (u/grid->positions grid)
        (reduce (fn [m pos]
@@ -64,6 +66,8 @@
                      (update m freq (fnil conj #{}) pos)
                      m)))
                {})))
+
+; ----------------------------------------------------------------------------------------------------------------------
 
 (defn solve [grid & {:keys [part]}]
   (let [row-max  (dec (count grid))
