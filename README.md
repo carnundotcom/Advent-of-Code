@@ -11,6 +11,7 @@
 | 2015 | [7](src/y2015/d7.clj) | **WIP** |
 | | | |
 | 2020 | [1](src/y2020/d1.clj) | (just warming up for 2024!) |
+| 2020 | [2](src/y2020/d2.clj) | I ❤️  regex |
 | | | |
 | 2021 | [1](src/y2021/d1.clj) | off to a nice, neat start |
 | 2021 | [2](src/y2021/d2.clj) | sooo much nicer than [my first attempt](https://github.com/CarnunMP/AoC-2021/blob/master/src/days/day2.clj)! |
