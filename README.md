@@ -47,5 +47,6 @@
 | 2024 | [8](src/y2024/d8.clj) | EDIT: It's interesting... coming back to this one many months later, having left it "TODO", only to find it entirely solved — and very readably, at that! So I'm not sure why I delayed writing this _summary_ at all, ha. But it was a nice surprise to find that nothing much more needed to be done.</br></br>Thanks past me! (Especially for `doto-print-grid`. A real complement to REPL-driven rediscovery, it was.) |
 | | | |
 | 2025 | [1](src/y2025/d1.clj) | Fun with `mod`. Nice start to 2025! |
+| 2025 | [2](src/y2025/d2.clj) | Sequences of sequences... |
 
 Feedback welcome!
