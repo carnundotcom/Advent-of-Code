@@ -63,8 +63,20 @@
    :s :n
    :w :e})
 
+(defn adj-positions
+  "Returns a lazy sequence of the (up to) 8 positions immediately adjacent to `pos`."
+  [grid [row col :as _pos]]
+  (for [x (range -1 2)
+        y (range -1 2)
+        :let [row' (+ row x)
+              col' (+ col y)]
+        :when (and (not (and (zero? x) (zero? y)))
+                   (not (or (< row' 0) (< col' 0)))
+                   (not (or (>= row' (count (first grid))) (>= row' (count grid)))))]
+    [row' col']))
+
 (defn grid->positions
-  "Returns a (lazy) sequence of all [row col] positions in the 'grid' (a 2D vector)."
+  "Returns a lazy sequence of all [row col] positions in the 'grid' (a 2D vector)."
   [grid]
   (for [col (range (count (first grid)))
         row (range (count grid))]
