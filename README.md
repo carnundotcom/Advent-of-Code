@@ -48,5 +48,6 @@
 | | | |
 | 2025 | [1](src/y2025/d1.clj) | Fun with `mod`. Nice start to 2025! |
 | 2025 | [2](src/y2025/d2.clj) | Sequences of sequences... |
+| 2025 | [3](src/y2025/d3.clj) | Tougher cookie, this one! My initial approach was neat, but farrrrr too slow. Had to start over. |
 
 Feedback welcome!
