@@ -50,5 +50,6 @@
 | 2025 | [2](src/y2025/d2.clj) | Sequences of sequences... |
 | 2025 | [3](src/y2025/d3.clj) | Tougher cookie, this one! My initial approach was neat, but farrrrr too slow. Had to start over. |
 | 2025 | [4](src/y2025/d4.clj) | Probably a fun one to animate! |
+| 2025 | [5](src/y2025/d5.clj) | Merging overlapping ranges. *Part 2 is buggy, currently...* |
 
 Feedback welcome!
