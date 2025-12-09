@@ -16,29 +16,32 @@
    "11"
    "17"
    "32"])
+
 (def input (u/input))
 
 ; ---
 
-(defn- overlap? [[left1 right1] [left2 right2]]
-  (or (<= left1 left2 right1)
-      (>= right1 right2 left1)))
+(defn parse
+  "Parses the input (vector of strings), returning {:ranges, :ids} where :ranges have been merged where overlapping."
+  [input]
+  (let [[range-strs _ ids] (partition-by (comp boolean seq) input)
+        overlap?           (fn [[left1 right1 :as _range1] [left2 right2 :as _range2]]
+                             (or (<= left1 right2 right1)  ; range1 contains right2
+                                 (>= right1 left2 left1)   ; range1 contains left2
+                                 (<= left2 right1 right2)  ; range2 contains right1
+                                 (>= right2 left1 left2)))
+        combine-ranges     (fn [ranges]
+                             ; NOTE: Assumes ranges already overlap
+                             (list (apply min (map first ranges))
+                                   (apply max (map second ranges))))
+        rf                 (fn [ranges range']
+                             (let [{overlaps true, rest-ranges false} (group-by (partial overlap? range') ranges)]
+                               (if (seq overlaps)
+                                 (conj rest-ranges (combine-ranges (conj overlaps range')))
+                                 (conj ranges range'))))]
 
-(defn- combine-ranges
-  [ranges]
-  (list (apply min (map first ranges))
-        (apply max (map second ranges))))
-
-(defn- reduce-ranges [ranges range']
-  (let [{overlaps true, rest-ranges false} (group-by (partial overlap? range') ranges)]
-    (if (seq overlaps)
-      (conj rest-ranges (combine-ranges (conj overlaps range')))
-      (conj ranges range'))))
-
-(defn parse [input]
-  (let [[range-strs _ ids] (partition-by (comp boolean seq) input)]
     {:ranges (->> (map #(map parse-long (str/split % #"-")) range-strs)
-                  (reduce reduce-ranges '()))
+                  (reduce rf '()))
      :ids    (map parse-long ids)}))
 
 ; ---
@@ -62,8 +65,10 @@
 (comment
   (require '[clj-async-profiler.core :as prof])
 
-  (prof/profile (time (dotimes [_ 100] (part2 dummy-input))))
+  ; Profiling helped me to realise that my initial approach, of generating a `valid?` set containing *all* valid ids,
+  ; was far too slow...
+  (prof/profile (time (dotimes [_ 100] (part1 dummy-input))))
   (prof/serve-ui 8080)
 
   (time (part2 input))
-)
+  )
