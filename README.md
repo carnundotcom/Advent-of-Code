@@ -51,5 +51,6 @@
 | 2025 | [3](src/y2025/d3.clj) | Tougher cookie, this one! My initial approach was neat, but farrrrr too slow. Had to start over. |
 | 2025 | [4](src/y2025/d4.clj) | Probably a fun one to animate! |
 | 2025 | [5](src/y2025/d5.clj) | Merging overlapping ranges... |
+| 2025 | [7](src/y2025/d7.clj) | Fun nested reduce... after some thought! |
 
 Feedback welcome!
